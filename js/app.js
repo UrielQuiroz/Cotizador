@@ -89,12 +89,33 @@ UI.prototype.mostrarMensaje = (msj, tipo) => {
 }
 
 UI.prototype.mostrarResultado = (total, seguro) => {
+
+    const { marca, year, tipo } = seguro;
+    let nombreMarca;
+
+    switch (marca) {
+        case '1':
+            nombreMarca = 'Americano';
+            break;
+        case '2':
+            nombreMarca = 'Asiatico';
+            break;
+        case '3':
+            nombreMarca = 'Europeo';
+            break;
+        default:
+            break;
+    }
+
     //Crear el resultado
     const div = document.createElement('div');
     div.classList.add('mt-10');
     div.innerHTML = `
         <p class="header">Tu resumen</p>
-        <p class="font-bold">Total: ${total}</p>
+        <p class="font-bold">Marca: <span class="font-normal"> ${nombreMarca} </span></p>
+        <p class="font-bold">Año: <span class="font-normal"> ${year} </span></p>
+        <p class="font-bold">Tipo: <span class="font-normal capitalize"> ${tipo} </span></p>
+        <p class="font-bold">Total: <span class="font-normal"> $ ${total} </span></p>
     `;
 
     const divResult = document.querySelector('#resultado');
