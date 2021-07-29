@@ -88,6 +88,27 @@ UI.prototype.mostrarMensaje = (msj, tipo) => {
     }, 2000);
 }
 
+UI.prototype.mostrarResultado = (total, seguro) => {
+    //Crear el resultado
+    const div = document.createElement('div');
+    div.classList.add('mt-10');
+    div.innerHTML = `
+        <p class="header">Tu resumen</p>
+        <p class="font-bold">Total: ${total}</p>
+    `;
+
+    const divResult = document.querySelector('#resultado');
+
+    //Mostrar el spinner
+    const spinner = document.querySelector('#cargando');
+    spinner.style.display = 'block';
+
+    setTimeout(() => {
+        spinner.style.display = 'none';
+        divResult.appendChild(div);
+    }, 2000);
+}
+
 //Instanciar UI
 const ui = new UI();
 console.log(ui);
@@ -121,8 +142,15 @@ function cotizarSeguro(e){
 
     ui.mostrarMensaje('Cotizando...', 'exito');
 
+    //Ocultar las cotizaciones previas
+    const resultados = document.querySelector('#resultado div');
+    if(resultados != null){
+        resultados.remove();
+    }
 
     //Instanciamos
     const seguro = new Seguro(marca, year, tipo);
-    seguro.cotizarSeguro();
+    const total = seguro.cotizarSeguro();
+
+    ui.mostrarResultado(total, seguro)
 }
